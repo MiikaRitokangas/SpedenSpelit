@@ -4,6 +4,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
+extern volatile int buttonNumber;
+
 /*
   initializeTimer() subroutine intializes Arduino Timer1 module to
   give interrupts at rate 1Hz

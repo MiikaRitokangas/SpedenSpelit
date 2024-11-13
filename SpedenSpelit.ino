@@ -7,7 +7,7 @@
 
 // Use these 2 volatile variables for communicating between
 // loop() function and interrupt handlers
-volatile int buttonNumber = -1;           // for buttons interrupt handler
+extern volatile int buttonNumber = -1;           // for buttons interrupt handler
 volatile bool newTimerInterrupt = false;  // for timer interrupt handler
 
 

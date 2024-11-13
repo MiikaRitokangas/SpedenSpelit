@@ -11,7 +11,7 @@ void playSound(int tune, int duration) {
   tone(BUZZER_PIN, tune, noteDuration);
   delay(noteDuration);
 
-  noTone(BUZZER_PIN);
+ // noTone(BUZZER_PIN);
 }
 
 // void playTune() {
