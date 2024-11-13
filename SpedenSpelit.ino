@@ -7,7 +7,7 @@
 
 // Use these 2 volatile variables for communicating between
 // loop() function and interrupt handlers
-volatile int buttonNumber = -1;           // for buttons interrupt handler
+extern volatile int buttonNumber = -1;           // for buttons interrupt handler
 volatile bool newTimerInterrupt = false;  // for timer interrupt handler
 
 
@@ -16,6 +16,10 @@ void setup()
   /*
     Initialize here all modules
   */
+  initButtonsAndButtonInterrupts();
+  initializeDisplay();
+  initializeLeds();
+  initializeBuzzer();
 }
 
 void loop()
@@ -24,6 +28,19 @@ void loop()
   {
      // start the game if buttonNumber == 4
      // check the game if 0<=buttonNumber<4
+     switch (buttonNumber) {
+      case BUTTON0_PIN:
+        playSound(TURQOISE_NOTE, 4);
+      case BUTTON1_PIN:
+        playSound(YELLOW_NOTE, 4);
+      case BUTTON2_PIN:
+        playSound(RED_NOTE, 4);
+      case BUTTON3_PIN:
+        playSound(GREEN_NOTE, 4);
+      case BUTTON4_PIN:
+        playTune(STARTGAME_TONE);
+        startTheGame();
+     }
   }
 
   if(newTimerInterrupt == true)
