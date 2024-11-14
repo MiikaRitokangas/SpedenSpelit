@@ -1,6 +1,8 @@
 #ifndef BUZZER_H
 #define BUZZER_H
 
+#define BUZZER_PIN 7 // The Arduino pin connected to the buzzer
+
 #define TURQOISE_NOTE 330
 #define YELLOW_NOTE 277
 #define RED_NOTE 440

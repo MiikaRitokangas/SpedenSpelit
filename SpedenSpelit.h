@@ -43,7 +43,9 @@ void checkGame(byte);
   function and enables Timer1 interrupts to start
   the Game.
 */
-void startTheGame(void);
+void startGame(void);
+
+void stopGame(void);
 
 
 #endif
