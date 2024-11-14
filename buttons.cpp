@@ -1,7 +1,6 @@
 #include "buttons.h"
 #include "SpedenSpelit.h"
 
-
 void initButtonsAndButtonInterrupts(void)
 {
   // See requirements for this function from buttons.h
@@ -26,30 +25,62 @@ ISR(PCINT2_vect) {
   byte readButton3 = digitalRead(BUTTON3_PIN);
   byte readButton4 = digitalRead(BUTTON4_PIN);
 
-  if(readButton0 == LOW){
-    Serial.print("Pressed button ");
-    Serial.println(BUTTON0_PIN);
-    buttonNumber = 0;
+  static unsigned long lastTimePressedButton0 = 0; //last time interupt happened
+  static unsigned long lastTimePressedButton1 = 0;
+  static unsigned long lastTimePressedButton2 = 0;
+  static unsigned long lastTimePressedButton3 = 0;
+  static unsigned long lastTimePressedButton4 = 0;
+  unsigned long debounceTimeButton0 = millis();
+  unsigned long debounceTimeButton1 = millis();
+  unsigned long debounceTimeButton2 = millis();
+  unsigned long debounceTimeButton3 = millis();
+  unsigned long debounceTimeButton4 = millis();
+  int debounceDelay = 155; // delay of 155 ms
+
+  //button debounce works, but ignores rapid button presses
+
+  //button 0
+  if(debounceTimeButton0 - lastTimePressedButton0 > debounceDelay){ //ignores input if it comes within debounceDelay from last imput
+    if(readButton0 == LOW){
+      Serial.print("Pressed button ");
+      Serial.println(BUTTON0_PIN - 2);
+    }
   }
-  if(readButton1 == LOW){
-    Serial.print("Pressed button ");
-    Serial.println(BUTTON1_PIN);
-    buttonNumber = 1;
+  lastTimePressedButton0 = debounceTimeButton0;
+
+  //button 1
+  if(debounceTimeButton1 - lastTimePressedButton1 > debounceDelay){ //ignores input if it comes within debounceDelay from last imput
+    if(readButton1 == LOW){
+      Serial.print("Pressed button ");
+      Serial.println(BUTTON1_PIN - 2);
+    }
   }
-  if(readButton2 == LOW){
-    Serial.print("Pressed button ");
-    Serial.println(BUTTON2_PIN);
-    buttonNumber = 2;
+  lastTimePressedButton1 = debounceTimeButton1;
+
+  //button 2
+  if(debounceTimeButton2 - lastTimePressedButton2 > debounceDelay){ //ignores input if it comes within debounceDelay from last imput
+    if(readButton2 == LOW){
+      Serial.print("Pressed button ");
+      Serial.println(BUTTON2_PIN - 2);
+    }
   }
-  if(readButton3 == LOW){
-    Serial.print("Pressed button ");
-    Serial.println(BUTTON3_PIN);
-    buttonNumber = 3;
+  lastTimePressedButton2 = debounceTimeButton2;
+
+  //button 3
+  if(debounceTimeButton3 - lastTimePressedButton3 > debounceDelay){ //ignores input if it comes within debounceDelay from last imput
+    if(readButton3 == LOW){
+      Serial.print("Pressed button ");
+      Serial.println(BUTTON3_PIN - 2);
+    }
   }
-  if(readButton4 == LOW){
-    Serial.print("Pressed button ");
-    Serial.println(BUTTON4_PIN);
-    buttonNumber = 4;
+  lastTimePressedButton3 = debounceTimeButton3;
+
+  //button 4
+  if(debounceTimeButton4 - lastTimePressedButton4 > debounceDelay){ //ignores input if it comes within debounceDelay from last imput
+    if(readButton4 == LOW){
+      Serial.print("Pressed button ");
+      Serial.println(BUTTON4_PIN - 2);
+    }
   }
-  
+  lastTimePressedButton4 = debounceTimeButton4;
 }
