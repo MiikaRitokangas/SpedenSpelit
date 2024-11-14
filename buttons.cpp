@@ -42,8 +42,9 @@ ISR(PCINT2_vect) {
   //button 0
   if(debounceTimeButton0 - lastTimePressedButton0 > debounceDelay){ //ignores input if it comes within debounceDelay from last imput
     if(readButton0 == LOW){
-      Serial.print("Pressed button ");
-      Serial.println(BUTTON0_PIN - 2);
+      Serial.print("Pressed button ");  //button debug
+      Serial.println(BUTTON0_PIN - 2);  //button debug
+      buttonNumber = 0;
     }
   }
   lastTimePressedButton0 = debounceTimeButton0;
@@ -51,8 +52,9 @@ ISR(PCINT2_vect) {
   //button 1
   if(debounceTimeButton1 - lastTimePressedButton1 > debounceDelay){ //ignores input if it comes within debounceDelay from last imput
     if(readButton1 == LOW){
-      Serial.print("Pressed button ");
-      Serial.println(BUTTON1_PIN - 2);
+      Serial.print("Pressed button ");  //button debug
+      Serial.println(BUTTON1_PIN - 2);  //button debug
+      buttonNumber = 1;
     }
   }
   lastTimePressedButton1 = debounceTimeButton1;
@@ -60,8 +62,9 @@ ISR(PCINT2_vect) {
   //button 2
   if(debounceTimeButton2 - lastTimePressedButton2 > debounceDelay){ //ignores input if it comes within debounceDelay from last imput
     if(readButton2 == LOW){
-      Serial.print("Pressed button ");
-      Serial.println(BUTTON2_PIN - 2);
+      Serial.print("Pressed button ");  //button debug
+      Serial.println(BUTTON2_PIN - 2);  //button debug
+      buttonNumber = 2;
     }
   }
   lastTimePressedButton2 = debounceTimeButton2;
@@ -69,8 +72,9 @@ ISR(PCINT2_vect) {
   //button 3
   if(debounceTimeButton3 - lastTimePressedButton3 > debounceDelay){ //ignores input if it comes within debounceDelay from last imput
     if(readButton3 == LOW){
-      Serial.print("Pressed button ");
-      Serial.println(BUTTON3_PIN - 2);
+      Serial.print("Pressed button ");  //button debug
+      Serial.println(BUTTON3_PIN - 2);  //button debug
+      buttonNumber = 3;
     }
   }
   lastTimePressedButton3 = debounceTimeButton3;
@@ -78,8 +82,9 @@ ISR(PCINT2_vect) {
   //button 4
   if(debounceTimeButton4 - lastTimePressedButton4 > debounceDelay){ //ignores input if it comes within debounceDelay from last imput
     if(readButton4 == LOW){
-      Serial.print("Pressed button ");
-      Serial.println(BUTTON4_PIN - 2);
+      Serial.print("Pressed button ");  //button debug
+      Serial.println(BUTTON4_PIN - 2);  //button debug
+      buttonNumber = 4;
     }
   }
   lastTimePressedButton4 = debounceTimeButton4;
