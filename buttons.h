@@ -4,6 +4,11 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
+#define BUTTON0_PIN 2
+#define BUTTON1_PIN 3
+#define BUTTON2_PIN 4
+#define BUTTON3_PIN 5
+#define BUTTON4_PIN 6
 
 const byte firstPin = 2; // First PinChangeInterrupt on D-bus
 const byte lastPin =  5; // Last PinChangeInterrupt on D-bus
