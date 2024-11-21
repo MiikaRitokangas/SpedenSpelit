@@ -2,6 +2,26 @@
 #define DISPLAY_H
 #include <arduino.h>
 
+#define DISP_RESETn   12
+#define DISP_SHIFT    11
+#define DISP_LATCH    10
+#define DISP_ENABLEn  9
+#define DISP_DATAIN   8
+
+/*
+Test code for display module:
+
+void setup() {
+  initializeDisplay();
+}
+
+void loop() {
+  for(int i = 0; i < 100; i++) {
+    showResult(i);
+    delay(1000);
+  }
+}
+*/
 
 /*
   initializeDisplay subroutine initializes 5 pins needed for controlling 7-segment
@@ -12,7 +32,7 @@
   Arduino pin 9  = serial to parallel component outEnable
   Arduino pin 8  = serial to parallel component serialInput
   
-
+  Shift register is cleared by toggling reset and latch
 */
 void initializeDisplay(void);
 
@@ -46,7 +66,7 @@ void writeByte(uint8_t number, bool last);
   uint8_t ones: number 0,1,..,9
   
 */
-void writeHighAndLowNumber(uint8_t tens,uint8_t ones);
+void writeHighAndLowNumber(uint8_t tens, uint8_t ones);
 
 
 /*

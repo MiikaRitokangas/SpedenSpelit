@@ -5,11 +5,25 @@
 #include <avr/interrupt.h>
 
 extern volatile int buttonNumber;
+static int ledDuration = 1000;
+static int ledOffDuration = 200;
+
+enum GameStates {
+  MAINMENU,
+  GAME,
+  GAMESTART,
+  GAMEOVER
+};
+
+enum GameModes {
+  GAMEMODE1,
+  GAMEMODE2
+};
+
 
 /*
   initializeTimer() subroutine intializes Arduino Timer1 module to
   give interrupts at rate 1Hz
-  
 */
 void initializeTimer(void);
 // Intoduce TIMER1_COMPA_vect Interrupt SeRvice (ISR) function for timer.
