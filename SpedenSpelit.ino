@@ -107,22 +107,6 @@ void checkGame(byte userInput) {
   }
 }
 
-void flashLed(int ledNumber) {
-  setLed(ledNumber);
-  delay(ledDuration);
-  setLed(ledNumber);
-}
-
-void flashLedMenu(int ledNumber) {
-  setLed(ledNumber);
-  delay(ledOffDuration);
-  setLed(ledNumber);
-  delay(ledDuration);
-  setLed(ledNumber);
-  delay(ledOffDuration);
-  setLed(ledNumber);
-}
-
 
 void handleMenu() {
   setAllLeds();

@@ -5,8 +5,6 @@
 #include <avr/interrupt.h>
 
 extern volatile int buttonNumber;
-static int ledDuration = 1000;
-static int ledOffDuration = 200;
 
 enum GameStates {
   MAINMENU,
