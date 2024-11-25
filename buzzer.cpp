@@ -19,6 +19,10 @@ int gameOver_notes = 3;
 int highScore[] {NOTE_A3, NOTE_B3, NOTE_C4, NOTE_A4, NOTE_G4, NOTE_A4, NOTE_B4, NOTE_C5, NOTE_A5, NOTE_G5, NOTE_C6};
 int highScore_dur[] {8, 7, 8, 7, 8, 8, 7, 8, 7, 8, 2};
 int highScore_notes = 12;
+//speed up sound
+int speedUp[] {NOTE_D4, NOTE_E4, NOTE_F4};
+int speedUp_dur[] {8,8,4};
+int speedUp_notes = 3;
 
 void initializeBuzzer() {
   pinMode(BUZZER_PIN, OUTPUT);
@@ -59,6 +63,9 @@ void playTune(int id) {
       break;
     case HIGHSCORE_TUNE:
       handleTune(highScore, highScore_dur, highScore_notes);
+      break;
+    case SPEEDUP_TUNE:
+      handleTune(speedUp, speedUp_dur, speedUp_notes);
       break;
   }
 }
