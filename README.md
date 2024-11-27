@@ -11,7 +11,7 @@
 
 ## Project's goals
 
-The goal of the project is to implement a microprocessor application that monitors its surroundings with the help of sensors, and controls the hardware connected to the microprocessor based on the signals from the sensors. With the addition of learn basic skills of project work and documentation
+The goal of the project is to implement a microprocessor application that monitors its surroundings with the help of sensors, and controls the hardware connected to the microprocessor based on the signals from the sensors. With the addition of learn basic skills of project work and documentation.
 
 ## Project's topic – Speden Spelit
 
@@ -24,5 +24,9 @@ FILLER TEXT
 
 ## List of components used
 
-- FILLER
-- TEXT
+- 3x TI 74HC595N shift register
+- 3x Kingbright SA52-11EWA 7-segment display
+- HLMP-4740 LED, Green, Through Hole, 5 mm
+- Generic Red LED, Through Hole, 5mm
+- Generic Yellow LED, Through Hole, 5mm
+- Generic Green LED, Through Hole, 5mm
