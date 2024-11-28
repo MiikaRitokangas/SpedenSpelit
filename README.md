@@ -4,10 +4,10 @@
 
 ## Table of contensts
 
-- [Project's goals](#Project's-goals)
-- [Project's topic – SpedenSpelit](#Project's-topic--Speden-Spelit)
-- [Technical Specifications](#Technical-Specifications)
-- [List of components used](#List-of-components-used)
+- [Project's goals](#projects-goals)
+- [Project's topic – SpedenSpelit](#projects-topic--speden-spelit)
+- [Technical Specifications](#technical-specifications)
+- [List of components used](#list-of-components-used)
 
 ## Project's goals
 
