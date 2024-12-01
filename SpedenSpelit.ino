@@ -123,6 +123,8 @@ void handleMenu() {
 void initializeGame() {
   int previousNum = -1;
   int currentNum;
+  game.score = 0;
+  game.index = 0;
   for (int i = 0; i < 100; i++) {
     do {
       currentNum = int(random(0, 4));
@@ -185,8 +187,6 @@ void stopGame() {
   } else {
     playTune(GAMEOVER_TUNE);
   }
-  game.score = 0;
-  game.index = 0;
   game.mode = -1;
   Timer1.stop();
   game.state = MAINMENU;
