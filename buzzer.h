@@ -16,6 +16,7 @@ enum GameTunes {
   GAMESTART_TUNE,
   GAMEOVER_TUNE,
   HIGHSCORE_TUNE,
+  SPEEDUP_TUNE,
 };
 
 void initializeBuzzer(void);
