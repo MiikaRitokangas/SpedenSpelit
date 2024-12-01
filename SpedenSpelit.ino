@@ -1,190 +1,175 @@
-#include "display.h"
-#include "buttons.h"
-#include "leds.h"
 #include "SpedenSpelit.h"
-#include "buzzer.h"
 
 // used for communicating between loop() and interrupts
 extern volatile int buttonNumber = -1;    // for buttons interrupt handler
-volatile bool newTimerInterrupt = false;  // for timer interrupt handler
+volatile bool newtimerInterrupt = false;  // for game.timer interrupt handler
 
-// state switching
-volatile int gameState = MAINMENU;  // 0 menu, 1 game, 2 game, 3 started, 4 gameover
-volatile int selectedGame = -1;
+struct gameStruct {
+  volatile int state;              // enum gameStates
+  volatile int mode;               // enum GameModes
+  volatile int index;              // current game step
+  int values[100];                 // game values
+  volatile int score;              // user score
+  volatile int highScore1;         // high score fetched from EEPROM
+  volatile int highScore2;         // high score fetched from EEPROM
+  volatile int timer;              // used as an ingame timer
+  volatile bool waitForUserInput;  // bool whether the game is waiting for userinput or not
+  float frequency;                 // gamespeed modifier
+};
 
-// scores
-int score = 0;
-int highScore = 0;
 
-// game 1 logic
-volatile int game1Values[99];
-volatile int newNumber;
-
-//game 2 logic
-volatile int game2Values[99];
-volatile int timer;
-volatile int stepCount;
-bool waitingForInput = false;
+gameStruct game = { MAINMENU, -1, 0, {}, 0, readHighscore(MODE1), readHighscore(MODE2), 0, false, 1.0 };  // TODO implement high score fetching (EEPROM.read(0) << 8) + EEPROM.read(1)
 
 int buttonNotes[4] = { TURQOISE_NOTE, YELLOW_NOTE, RED_NOTE, GREEN_NOTE };
 
 void setup() {
   // Initializing all modules here
+  Serial.begin(9600);
   initButtonsAndButtonInterrupts();
   initializeDisplay();
   initializeLeds();
   initializeBuzzer();
+  interrupts();
 }
 
 void loop() {
-  // check what state the game is in and call the correct function to handle the gamestate.
-  switch (gameState) {
+  // check what state the game is in and call the correct function to handle the game.state.
+  switch (game.state) {
     case MAINMENU:
       handleMenu();
       break;
     case GAME:
-      switch (selectedGame) {
-        case GAMEMODE1:
+      switch (game.mode) {
+        case MODE1:
           game1Logic();
           break;
-        case GAMEMODE2:
+        case MODE2:
           game2Logic();
           break;
       }
       break;
-    case GAMESTART:
-      startGame();
-      break;
-    case GAMEOVER:
-      stopGame();
-      break;
   }
 }
 
-void initializeTimer(void) {
+int calculateFrequency(void) {
+  return int(1000000 * game.frequency);
+}
+
+void Timer1_ISR(void) {
+  newtimerInterrupt = true;
+}
+
+void initializetimer(void) {
   // see requirements for the function from SpedenSpelit.h
-  TCCR1A = 0;           // Init Timer1
-  TCCR1B = 0;           // Init Timer1
-  TCCR1B |= B00000011;  // Prescalar = 64
-  OCR1A = 62500;        // Timer Compare1A Register
-  TIMSK1 |= B00000010;  // Enable Timer COMPA Interrupt
+  Timer1.initialize(calculateFrequency());
+  Timer1.attachInterrupt(Timer1_ISR);
 }
 
-ISR(TIMER1_COMPA_vect) {
-  if (gameState == GAME) {
-    if (newNumber > 9) {
-      OCR1A += 46875; // Advance The COMPA Register
-    } else {
-      OCR1A += 62500;  // Advance The COMPA Register
-    }
-    if (selectedGame == GAMEMODE1) {
-      newTimerInterrupt = true;
-    }
-    if (selectedGame == GAMEMODE2) {
-      OCR1A += 62500;  // Advance The COMPA Register
-      if (waitingForInput) {
-        // in the second game you have 30 seconds to answer if the game is waiting for user input
-        if (timer >= 30) {
-          gameState = GAMEOVER;
-        }
-        timer++;
-      }
-    }
-  }
-}
+// ISR(timer1_COMPA_vect) {
+//   // if (game.mode == MODE2) {
+//   //   if (game.waitForUserInput) {
+//   //     // in the second game you have 30 seconds to answer if the game is waiting for user input
+//   //     if (game.timer >= 30) {
+//   //       game.state = -1;
+//   //       stopGame();
+//   //     }
+//   //     game.timer++;
+//   //   }
+//   // }
+// }
 
 
 void checkGame(byte userInput) {
   // check if the last played button was correct
-  if (game1Values[score] == userInput) {
-    playSound(buttonNotes[userInput], 4);
-    flashLed(userInput);
-    score++;
+  if (game.score < 100) {
+    if (game.values[game.score] == userInput) {
+      playSound(buttonNotes[userInput], 4);
+      flashLed(userInput);
+      game.score++;
+      writeHighAndLowNumber(game.score / 10 % 10, game.score % 10);
+    } else {
+      game.state = -1;
+      stopGame();
+    }
   } else {
-    gameState = GAMEOVER;
-  }
-  if (selectedGame == 1) {
+    gameStop();
   }
 }
-
-void flashLed(int ledNumber) {
-  setLed(ledNumber);
-  delay(ledDuration);
-  setLed(ledNumber);
-}
-
-void flashLedMenu(int ledNumber) {
-  setLed(ledNumber);
-  delay(ledOffDuration);
-  setLed(ledNumber);
-  delay(ledDuration);
-  setLed(ledNumber);
-  delay(ledOffDuration);
-  setLed(ledNumber);
-}
-
 
 void handleMenu() {
   setAllLeds();
   switch (buttonNumber) {
-    case -1:
-      break;
     case 0:
-      selectedGame = GAMEMODE1;
+      game.mode = MODE1;
       playSound(buttonNotes[buttonNumber], 4);
       flashLedMenu(buttonNumber);
+      writeHighAndLowNumber(game.highScore1 / 10 % 10, game.highScore1 % 10);
+      buttonNumber = -1;
       break;
     case 1:
-      selectedGame = GAMEMODE2;
+      game.mode = MODE2;
       playSound(buttonNotes[buttonNumber], 4);
       flashLedMenu(buttonNumber);
+      writeHighAndLowNumber(game.highScore2 / 10 % 10, game.highScore2 % 10);
+      buttonNumber = -1;
       break;
     case 4:
-      gameState = GAMESTART;
+      buttonNumber = -1;
+      if (game.mode != -1) {
+        game.state = -1;
+        startGame();
+      }
       break;
   }
 }
 
+
 void initializeGame() {
-  switch (selectedGame) {
-    case GAMEMODE1:
-      for (int i = 0; i <= 100; i++) {
-        game1Values[i] = random(0, 3);
-      }
-      playTune(GAMESTART_TUNE);
-      break;
-    case GAMEMODE2:
-      //game2Values = {};
-      break;
+  int previousNum = -1;
+  int currentNum;
+  for (int i = 0; i < 100; i++) {
+    do {
+      currentNum = int(random(0, 4));
+    } while (currentNum == previousNum);
+    game.values[i] = currentNum;
+    previousNum = currentNum;
   }
-  gameState = GAME;
+  game.state = GAME;
 }
 
 void startGame() {
   clearAllLeds();
   initializeGame();
+  initializetimer();
 }
 
 void game1Logic() {
+  if (newtimerInterrupt) {
+    newtimerInterrupt = false;
+    playSound(game.values[game.index], 4);
+    flashLed(game.values[game.index]);
+    game.index++;
+    if (game.timer > 9) {
+      game.timer = 0;
+      game.frequency -= .1;
+      Timer1.setPeriod(calculateFrequency());
+    } else {
+      game.timer++;
+    }
+    if (game.index > game.score + 5) {
+      stopGame();
+    }
+  }
   if (buttonNumber >= 0) {
     if (0 <= buttonNumber < 4) {
       checkGame(buttonNumber);
       buttonNumber = -1;
     }
   }
-  if (newTimerInterrupt) {
-    flashLed(game1Values[newNumber]);
-    playSound(game1Values[newNumber], 4);
-    newNumber++;
-    if (newNumber > score + 5) {
-      gameState = GAMEOVER;
-    }
-    newTimerInterrupt = false;
-  }
 }
 
 void game2Logic() {
-  if (waitingForInput) {
+  if (game.waitForUserInput) {
     if (buttonNumber >= 0) {
       if (0 <= buttonNumber < 4) {
         checkGame(buttonNumber);
@@ -195,15 +180,18 @@ void game2Logic() {
 }
 
 void stopGame() {
-  // game ended, handle saving high score and ending the game
-  if (score > highScore) {
-    highScore = score;
-    score = 0;
+  // game ended, handle saving high game.score and ending the game
+  if (game.score > game.highScore1 || game.score == 99) {
+    game.highScore1 = game.score;
+    writeHighscore(game.highScore1, MODE1);
+    game.score = 0;
     playTune(HIGHSCORE_TUNE);
   } else {
-    score = 0;
+    game.score = 0;
     playTune(GAMEOVER_TUNE);
   }
-  gameState = MAINMENU;
-  selectedGame = -1;
+  Timer1.stop();
+  game.state = MAINMENU;
+  game.index = 0;
+  game.mode = -1;
 }

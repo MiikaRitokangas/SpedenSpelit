@@ -3,21 +3,27 @@
 #include <arduino.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "display.h"
+#include "buttons.h"
+#include "leds.h"
+#include "buzzer.h"
+#include "eeprom.h"
+#include <TimerOne.h>
+
 
 extern volatile int buttonNumber;
-static int ledDuration = 1000;
-static int ledOffDuration = 200;
+
 
 enum GameStates {
   MAINMENU,
   GAME,
-  GAMESTART,
-  GAMEOVER
+  STARTGAME,
+  STOPGAME
 };
 
 enum GameModes {
-  GAMEMODE1,
-  GAMEMODE2
+  MODE1,
+  MODE2
 };
 
 
