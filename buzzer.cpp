@@ -4,13 +4,13 @@
 #include "SpedenSpelit.h"
 
 //start game sound
-int startGame[] { NOTE_C4, NOTE_G3, NOTE_G3, NOTE_A3, NOTE_G3, 0, NOTE_B3, NOTE_C4 };
-int startGame_dur[] { 4, 8, 8, 4, 4, 4, 4, 4 };
-int startGame_notes = 8;
+int gameStart[] { NOTE_C4, NOTE_G3, NOTE_G3, NOTE_A3, NOTE_G3, 0, NOTE_B3, NOTE_C4 };
+int gameStart_dur[] { 4, 8, 8, 4, 4, 4, 4, 4 };
+int gameStart_notes = 8;
 //start game alternative sound
-int startGameAlt[] { NOTE_E3, NOTE_CS3, NOTE_A3, NOTE_E4, NOTE_CS4, NOTE_A4};
-int startGameAlt_dur[] { 8, 8, 4, 8, 8, 4};
-int startGameAlt_notes = 6;
+int gameStartAlt[] { NOTE_E3, NOTE_CS3, NOTE_A3, NOTE_E4, NOTE_CS4, NOTE_A4};
+int gameStartAlt_dur[] { 8, 8, 4, 8, 8, 4};
+int gameStartAlt_notes = 6;
 //game over sounds
 int gameOver[] {NOTE_D2, NOTE_CS2, NOTE_C1};
 int gameOver_dur[] {4, 3, 1};
@@ -53,10 +53,10 @@ void handleTune(int notes[], int noteDurs[], int noteAmount) {
 void playTune(int id) {
   switch (id) {
     case STARTUP_TUNE:
-      handleTune(startGame, startGame_dur, startGame_notes);
+      handleTune(gameStart, gameStart_dur, gameStart_notes);
       break;
     case GAMESTART_TUNE:
-      handleTune(startGameAlt, startGameAlt_dur, startGameAlt_notes);
+      handleTune(gameStartAlt, gameStartAlt_dur, gameStartAlt_notes);
       break;
     case GAMEOVER_TUNE:
       handleTune(gameOver, gameOver_dur, gameOver_notes);

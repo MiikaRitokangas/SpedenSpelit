@@ -4,21 +4,7 @@
 extern volatile int buttonNumber = -1;    // for buttons interrupt handler
 volatile bool newtimerInterrupt = false;  // for game.timer interrupt handler
 
-struct gameStruct {
-  volatile int state;              // enum gameStates
-  volatile int mode;               // enum GameModes
-  volatile int index;              // current game step
-  int values[100];                 // game values
-  volatile int score;              // user score
-  volatile int highScore1;         // high score fetched from EEPROM
-  volatile int highScore2;         // high score fetched from EEPROM
-  volatile int timer;              // used as an ingame timer
-  volatile bool waitForUserInput;  // bool whether the game is waiting for userinput or not
-  float frequency;                 // gamespeed modifier
-};
-
-
-gameStruct game = { MAINMENU, -1, 0, {}, 0, readHighscore(MODE1), readHighscore(MODE2), 0, false, 1.0 };  // TODO implement high score fetching (EEPROM.read(0) << 8) + EEPROM.read(1)
+extern gameStruct game = { MAINMENU, -1, 0, {}, 0, readHighscore(MODE1), readHighscore(MODE2), 0, false, 1.0 };  // TODO implement high score fetching (EEPROM.read(0) << 8) + EEPROM.read(1)
 
 int buttonNotes[4] = { TURQOISE_NOTE, YELLOW_NOTE, RED_NOTE, GREEN_NOTE };
 
@@ -47,6 +33,12 @@ void loop() {
           game2Logic();
           break;
       }
+      break;
+    case STARTGAME:
+      startGame();
+      break;
+    case STOPGAME:
+      stopGame();
       break;
   }
 }
@@ -79,7 +71,7 @@ void initializetimer(void) {
 // }
 
 
-void checkGame(byte userInput) {
+void checkGame(int userInput) {
   // check if the last played button was correct
   if (game.score < 100) {
     if (game.values[game.score] == userInput) {
@@ -88,11 +80,10 @@ void checkGame(byte userInput) {
       game.score++;
       writeHighAndLowNumber(game.score / 10 % 10, game.score % 10);
     } else {
-      game.state = -1;
-      stopGame();
+      game.state = STOPGAME;
     }
   } else {
-    gameStop();
+    game.state = STOPGAME;
   }
 }
 
@@ -113,11 +104,16 @@ void handleMenu() {
       writeHighAndLowNumber(game.highScore2 / 10 % 10, game.highScore2 % 10);
       buttonNumber = -1;
       break;
+    case 3:
+      buttonNumber = -1;
+      if (game.mode != -1) {
+        clearHighscore(game.mode);
+      }
+      break;
     case 4:
       buttonNumber = -1;
       if (game.mode != -1) {
-        game.state = -1;
-        startGame();
+        game.state = STARTGAME;
       }
       break;
   }
@@ -132,6 +128,7 @@ void initializeGame() {
       currentNum = int(random(0, 4));
     } while (currentNum == previousNum);
     game.values[i] = currentNum;
+    Serial.println(currentNum);
     previousNum = currentNum;
   }
   game.state = GAME;
@@ -140,10 +137,16 @@ void initializeGame() {
 void startGame() {
   clearAllLeds();
   initializeGame();
+  delay(400);
   initializetimer();
 }
 
 void game1Logic() {
+  // if (0 <= buttonNumber && buttonNumber < 4) {
+  //   Serial.println(buttonNumber);
+  //   checkGame(buttonNumber);
+  //   buttonNumber = -1;
+  // }
   if (newtimerInterrupt) {
     newtimerInterrupt = false;
     playSound(game.values[game.index], 4);
@@ -158,12 +161,6 @@ void game1Logic() {
     }
     if (game.index > game.score + 5) {
       stopGame();
-    }
-  }
-  if (buttonNumber >= 0) {
-    if (0 <= buttonNumber < 4) {
-      checkGame(buttonNumber);
-      buttonNumber = -1;
     }
   }
 }
@@ -184,14 +181,13 @@ void stopGame() {
   if (game.score > game.highScore1 || game.score == 99) {
     game.highScore1 = game.score;
     writeHighscore(game.highScore1, MODE1);
-    game.score = 0;
     playTune(HIGHSCORE_TUNE);
   } else {
-    game.score = 0;
     playTune(GAMEOVER_TUNE);
   }
-  Timer1.stop();
-  game.state = MAINMENU;
+  game.score = 0;
   game.index = 0;
   game.mode = -1;
+  Timer1.stop();
+  game.state = MAINMENU;
 }
