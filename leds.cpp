@@ -1,6 +1,11 @@
 #include <Arduino.h>
 #include "leds.h"
 
+byte startGameLeds[] { 0, 1, 1, 2, 1, 50, 3, 0 }; // LEDs for start game sound 50 = break
+byte startGameAltLeds[] { 1, 0, 2, 4, 3, 7}; // LEDs for start game alternative sound
+byte gameOverLeds[] {14, 14, 14}; //  LEDs for game over sound
+byte highScoreLeds[] {12, 10, 7, 5, 6, 5, 4, 3, 1, 2, 0, 50}; //  LEDs for high score sound
+
 //Intializes analog pins A2,A3,A4,A5 to be used as outputs.
 void initializeLeds()
 {
@@ -9,6 +14,97 @@ void initializeLeds()
   pinMode(LED_1, OUTPUT); // Pin A3
   pinMode(LED_2, OUTPUT); // Pin A4
   pinMode(LED_3, OUTPUT); // Pin A5
+}
+
+// Flash a single LED
+void flashLed(int ledNumber) {
+  setLed(ledNumber); // LED on
+  delay(ledDuration);
+  setLed(ledNumber);  // LED off
+}
+
+// Flash a single LED for menu operations
+void flashLedMenu(int ledNumber) {
+  setLed(ledNumber);   // LED on
+  delay(ledOffDuration);
+  setLed(ledNumber);   // LED off
+}
+
+// Toggle multiple LEDs on and off with delay
+void toggleLeds(byte leds[], int count, int delayTime) {
+  for (int i = 0; i < count; i++) {
+    setLed(leds[i]);
+  }
+  delay(delayTime);
+  for (int i = 0; i < count; i++) {
+    setLed(leds[i]);
+  }
+}
+
+// Handle specific LED patterns based on the note
+void handleLeds(byte note, int ledDelay) {
+  switch (note) {
+    case 4: { // Binary 0011: Turn on LEDs 0 and 1
+        byte leds[] = {0, 1};
+        toggleLeds(leds, 2, ledDelay);
+        break;
+      }
+    case 5: { // Binary 0101: Turn on LEDs 0 and 2
+        byte leds[] = {0, 2};
+        toggleLeds(leds, 2, ledDelay);
+        break;
+      }
+    case 6: { // Binary 0110: Turn on LEDs 1 and 2
+        byte leds[] = {1, 2};
+        toggleLeds(leds, 2, ledDelay);
+        break;
+      }
+    case 7: { // Binary 0111: Turn on LEDs 0, 1, 2
+        byte leds[] = {0, 1, 2};
+        toggleLeds(leds, 3, ledDelay);
+        break;
+      }
+    case 8: { // Binary 1001: Turn on LEDs 0 and 3
+        byte leds[] = {0, 3};
+        toggleLeds(leds, 2, ledDelay);
+        break;
+      }
+    case 9: { // Binary 1010: Turn on LEDs 1 and 3
+        byte leds[] = {1, 3};
+        toggleLeds(leds, 2, ledDelay);
+        break;
+      }
+    case 10: { // Binary 1011: Turn on LEDs 0, 1, 3
+        byte leds[] = {0, 1, 3};
+        toggleLeds(leds, 3, ledDelay);
+        break;
+      }
+    case 11: { // Binary 1100: Turn on LEDs 2 and 3
+        byte leds[] = {2, 3};
+        toggleLeds(leds, 2, ledDelay);
+        break;
+      }
+    case 12: { // Binary 1101: Turn on LEDs 0, 2, 3
+        byte leds[] = {0, 2, 3};
+        toggleLeds(leds, 3, ledDelay);
+        break;
+      }
+    case 13: { // Binary 1110: Turn on LEDs 1, 2, 3
+        byte leds[] = {1, 2, 3};
+        toggleLeds(leds, 3, ledDelay);
+        break;
+      }
+    case 14: { // Binary 1111: Turn on all LEDs
+        byte leds[] = {0, 1, 2, 3};
+        toggleLeds(leds, 4, ledDelay);
+        break;
+      }
+    default:
+      setLed(note);   // Turn on a single LED
+      delay(ledDelay);// Delay
+      setLed(note);   // Turn off
+      break;
+  }
 }
 
 // Set specific LED on/off.
