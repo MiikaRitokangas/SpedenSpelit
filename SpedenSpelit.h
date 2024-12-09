@@ -3,21 +3,40 @@
 #include <arduino.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "display.h"
+#include "buttons.h"
+#include "leds.h"
+#include "buzzer.h"
+#include "eeprom.h"
+#include <TimerOne.h>
+
 
 extern volatile int buttonNumber;
-static int ledDuration = 1000;
-static int ledOffDuration = 200;
+struct gameStruct {
+  volatile int state;              // enum gameStates
+  volatile int mode;               // enum GameModes
+  volatile int index;              // current game step
+  volatile int values[100];        // game values
+  volatile int score;              // user score
+  volatile int highScore1;         // high score fetched from EEPROM
+  volatile int highScore2;         // high score fetched from EEPROM
+  volatile int timer;              // used as an ingame timer
+  volatile bool waitForUserInput;  // bool whether the game is waiting for userinput or not
+  float frequency;                 // gamespeed modifier
+  volatile bool cheat;             // is cheatmode enabled
+};
+extern gameStruct game;
 
 enum GameStates {
   MAINMENU,
   GAME,
-  GAMESTART,
-  GAMEOVER
+  STARTGAME,
+  STOPGAME
 };
 
 enum GameModes {
-  GAMEMODE1,
-  GAMEMODE2
+  MODE1,
+  MODE2
 };
 
 
@@ -49,7 +68,7 @@ void initializeGame(void);
   byte lastButtonPress of the player 0 or 1 or 2 or 3
   
 */
-void checkGame(byte);
+void checkGame(int);
 
 
 /*

@@ -1,2 +1,40 @@
 # SpedenSpelit
-A school project for a "Simon" like game
+
+**WORK IN PROGRESS**
+
+## Table of contensts
+
+- [Project's goals](#projects-goals)
+- [Project's topic – SpedenSpelit](#projects-topic--speden-spelit)
+- [Technical Specifications](#technical-specifications)
+- [List of components used](#list-of-components-used)
+- [Simulation](https://wokwi.com/projects/415181822807852033)
+
+## Project's goals
+
+The goal of the project is to implement a microprocessor application that monitors its surroundings with the help of sensors, and controls the hardware connected to the microprocessor based on the signals from the sensors. With the addition of learn basic skills of project work and documentation.
+
+## Project's topic – Speden Spelit
+
+Speden Spelit Speed Test works as the project’s topic. The Speed Test was one of the games used during the airing of the Finnish game show Speden Spelit in the years of 1988–2002. The goal of the Speed Test is to hit the right button indicated by a flash of a light in time, while the speed of the required inputs increases.
+
+## Technical Specifications
+
+FILLER TEXT
+
+
+## List of components used
+
+| Type                                | Amount      | Part model            |
+|-------------------------------------|-------------|-----------------------|
+|Shift register                       | 3           | TI 74HC595N           |
+|7-segment display                    | 3           | Kingbright SA52-11EWA |
+|Turquoise LED, Through Hole, 5mm     | 1           | HLMP-4740             |
+|Red LED, Through Hole, 5mm           | 1           | Generic               |
+|Yellow LED, Through Hole, 5mm        | 1           | Generic               |
+|Green LED, Through Hole, 5mm         | 1           | Generic               |
+|SMD Piezo Buzzer                     | 1           | KLJ-1625              |
+|Push Button 4-pin                    | 4           | Generic               |
+|680 Ω resistor (red LED)             | 1           | Generic               |
+|180 Ω resistor (yello and green LED) | 2           | Generic               |
+|2k Ω resistor (turquoise LED)        | 1           | Generic               |
