@@ -8,6 +8,7 @@
 - [Project's topic – SpedenSpelit](#projects-topic--speden-spelit)
 - [Technical Specifications](#technical-specifications)
 - [List of components used](#list-of-components-used)
+- [Simulation](https://wokwi.com/projects/415181822807852033)
 
 ## Project's goals
 
