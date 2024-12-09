@@ -23,11 +23,9 @@ struct gameStruct {
   volatile int timer;              // used as an ingame timer
   volatile bool waitForUserInput;  // bool whether the game is waiting for userinput or not
   float frequency;                 // gamespeed modifier
+  volatile bool cheat;             // is cheatmode enabled
 };
-
-
 extern gameStruct game;
-
 
 enum GameStates {
   MAINMENU,

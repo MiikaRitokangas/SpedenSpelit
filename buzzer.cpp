@@ -24,6 +24,8 @@ int speedUp[] {NOTE_D4, NOTE_E4, NOTE_F4};
 int speedUp_dur[] {8,8,4};
 int speedUp_notes = 3;
 
+byte none[0];
+
 void initializeBuzzer() {
   pinMode(BUZZER_PIN, OUTPUT);
   noTone(BUZZER_PIN);
@@ -34,15 +36,13 @@ void playSound(int tune, int duration) {
   // e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
   int noteDuration = 1000 / duration;
   tone(BUZZER_PIN, tune, noteDuration);
-  delay(noteDuration);
-
-  noTone(BUZZER_PIN);
 }
 
-void handleTune(int notes[], int noteDurs[], int noteAmount) {
+void handleTune(int notes[], int noteDurs[], int noteAmount, byte leds[]) {
   for (int thisNote = 0; thisNote < noteAmount; thisNote++) {
     int noteDuration = 1000 / noteDurs[thisNote];
     tone(BUZZER_PIN, notes[thisNote], noteDuration);
+    handleLeds(leds[thisNote], noteDuration);
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);
     // stop the tone playing:
@@ -53,19 +53,19 @@ void handleTune(int notes[], int noteDurs[], int noteAmount) {
 void playTune(int id) {
   switch (id) {
     case STARTUP_TUNE:
-      handleTune(gameStart, gameStart_dur, gameStart_notes);
+      handleTune(gameStart, gameStart_dur, gameStart_notes, gameStartLeds);
       break;
     case GAMESTART_TUNE:
-      handleTune(gameStartAlt, gameStartAlt_dur, gameStartAlt_notes);
+      handleTune(gameStartAlt, gameStartAlt_dur, gameStartAlt_notes, gameStartAltLeds);
       break;
     case GAMEOVER_TUNE:
-      handleTune(gameOver, gameOver_dur, gameOver_notes);
+      handleTune(gameOver, gameOver_dur, gameOver_notes, gameOverLeds);
       break;
     case HIGHSCORE_TUNE:
-      handleTune(highScore, highScore_dur, highScore_notes);
+      handleTune(highScore, highScore_dur, highScore_notes, highScoreLeds);
       break;
     case SPEEDUP_TUNE:
-      handleTune(speedUp, speedUp_dur, speedUp_notes);
+      handleTune(speedUp, speedUp_dur, speedUp_notes, none);
       break;
   }
 }
