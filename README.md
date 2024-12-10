@@ -6,9 +6,10 @@
 
 - [Project's goals](#projects-goals)
 - [Project's topic – SpedenSpelit](#projects-topic--speden-spelit)
+- [Features](#features)
 - [Technical Specifications](#technical-specifications)
 - [List of components used](#list-of-components-used)
-- [Simulation](https://wokwi.com/projects/415181822807852033)
+- [Simulation](#simulation)
 
 ## Project's goals
 
@@ -17,6 +18,10 @@ The goal of the project is to implement a microprocessor application that monito
 ## Project's topic – Speden Spelit
 
 Speden Spelit Speed Test works as the project’s topic. The Speed Test was one of the games used during the airing of the Finnish game show Speden Spelit in the years of 1988–2002. The goal of the Speed Test is to hit the right button indicated by a flash of a light in time, while the speed of the required inputs increases.
+
+## Features
+
+During the development of the project, there have been added additional features to the game. The features include two additional game modes. These game modes are sequence memory mode and a blind mode. These modes can be accessed from the games start menu.
 
 ## Technical Specifications
 
@@ -38,3 +43,7 @@ FILLER TEXT
 |680 Ω resistor (red LED)             | 1           | Generic               |
 |180 Ω resistor (yello and green LED) | 2           | Generic               |
 |2k Ω resistor (turquoise LED)        | 1           | Generic               |
+
+## Simulation
+
+You can simulate the game from wokwi [here](https://wokwi.com/projects/415181822807852033) or at https://wokwi.com/projects/415181822807852033.
