@@ -21,7 +21,7 @@ Speden Spelit Speed Test works as the project’s topic. The Speed Test was one 
 
 ## Additional features
 
-During the development of the project, there have been added additional features to the game. The features include two additional game modes. These game modes are sequence memory mode and a blind mode. These modes can be accessed from the games start menu.
+During the development of the project, there have been added additional features to the game. The features include two additional game modes. These game modes are a "sequence memory mode" and a "blind mode". These modes can be accessed from the games start menu.
 
 ## Technical Specifications
 
