@@ -13,7 +13,7 @@ void initButtonsAndButtonInterrupts(void) {
 }
 
 volatile unsigned long lastTimePressedButton = 0;  //last time interupt happened
-static int debounceDelay = 50;                     // delay duration
+static int debounceDelay = 20;                     // delay duration
 
 ISR(PCINT2_vect) {
   /*

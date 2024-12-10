@@ -69,11 +69,13 @@ void checkGame(int userInput) {
       case MODE1:
         if (game.values[game.score] == userInput) {
           setLed(userInput);
-          playSound(buttonNotes[userInput], 4);
+          if (!game.cheat) {
+            playSound(buttonNotes[userInput], 4);
+          }
           delay(250);
           clearAllLeds();
           game.score++;
-          writeHighAndLowNumber(game.score / 10 % 10, game.score % 10);
+          showResult(game.score);
         } else {
           game.state = STOPGAME;
         }
@@ -93,7 +95,7 @@ void checkGame(int userInput) {
             if (game.score < game.index) {
               game.index = 0;
               game.score++;
-              writeHighAndLowNumber(game.score / 10 % 10, game.score % 10);
+              showResult(game.score);
               delay(1000);
               game.waitForUserInput = false;
             }
@@ -113,14 +115,14 @@ void handleMenu() {
       game.mode = MODE1;
       playSound(buttonNotes[buttonNumber], 4);
       flashLedMenu(buttonNumber);
-      writeHighAndLowNumber(game.highScore1 / 10 % 10, game.highScore1 % 10);
+      showResult(game.highScore1);
       buttonNumber = -1;
       break;
     case 1:
       game.mode = MODE2;
       playSound(buttonNotes[buttonNumber], 4);
       flashLedMenu(buttonNumber);
-      writeHighAndLowNumber(game.highScore2 / 10 % 10, game.highScore2 % 10);
+      showResult(game.highScore2);
       buttonNumber = -1;
       break;
     case 2:
@@ -162,6 +164,7 @@ void initializeGame() {
   game.index = 0;
   game.frequency = 1.0;
   game.timer = 0;
+  Timer1.setPeriod(calculateFrequency());
   randomSeed(analogRead(A0));
   for (int i = 0; i < 100; i++) {
     do {
@@ -188,13 +191,18 @@ void game1Logic() {
       if ((!game.cheat) || !(game.index % 20 >= 10 && game.index % 20 < 20)) {
         setLed(game.values[game.index]);
       }
-      playSound(buttonNotes[game.values[game.index]], 4);
+      if (game.cheat) {
+        playSound(buttonNotes[game.values[game.index]], 4);
+      }
       delay(250);
       clearAllLeds();
       game.index++;
       if (game.timer > 9) {
-        game.timer = 0;
+        game.timer = 1;
         game.frequency -= 0.1;
+        playTune(SPEEDUP_TUNE);
+        Serial.println(calculateFrequency());
+        Serial.println(game.frequency);
         Timer1.setPeriod(calculateFrequency());
       } else {
         game.timer++;
@@ -210,13 +218,15 @@ void game1Logic() {
 void game2Logic() {
   if (!game.waitForUserInput) {
     for (int i = 0; i <= game.score; i++) {
-      delay(250 * game.frequency);
       playSound(buttonNotes[game.values[i]], 4);
-      flashLed(game.values[i]);
+      setLed(game.values[i]);
+      delay(500 * game.frequency);
+      clearAllLeds();
     }
     game.waitForUserInput = true;
     if (game.score % 10 == 0 && game.score != 0) {
       game.frequency -= 0.1;
+      playTune(SPEEDUP_TUNE);
     }
   }
 }
