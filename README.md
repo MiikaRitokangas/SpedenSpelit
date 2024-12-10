@@ -25,7 +25,8 @@ During the development of the project, there have been added additional features
 
 ## Technical Specifications
 
-FILLER TEXT
+Circuit diagram
+![Reaction-game-ciruitdia1](https://github.com/user-attachments/assets/4448b178-509a-4be8-9fd6-8147b8cd6e2c)
 
 
 ## List of components used
