@@ -24,8 +24,6 @@ int speedUp[] {NOTE_D4, NOTE_E4, NOTE_F4};
 int speedUp_dur[] {16,16,8};
 int speedUp_notes = 3;
 
-byte none[0];
-
 void initializeBuzzer() {
   pinMode(BUZZER_PIN, OUTPUT);
   noTone(BUZZER_PIN);
@@ -65,7 +63,7 @@ void playTune(int id) {
       handleTune(highScore, highScore_dur, highScore_notes, highScoreLeds);
       break;
     case SPEEDUP_TUNE:
-      handleTune(speedUp, speedUp_dur, speedUp_notes, none);
+      handleTune(speedUp, speedUp_dur, speedUp_notes, speedUpLeds);
       break;
   }
 }
