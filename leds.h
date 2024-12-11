@@ -12,6 +12,7 @@ extern byte gameStartLeds[];  // LEDs for the "start game sound"
 extern byte gameStartAltLeds[];  // LEDs for the "alternative start game sound"
 extern byte gameOverLeds[];  // LEDs for the "game over sound"
 extern byte highScoreLeds[];  // LEDs for the "high score sound"
+extern byte speedUpLeds[];
 
 /*
   initializeLeds() subroutine intializes analog pins A2,A3,A4,A5
