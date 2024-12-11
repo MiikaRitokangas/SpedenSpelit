@@ -27,7 +27,7 @@ During the development of the project, there have been added additional features
 
 #### Circuit diagram
 
-![Reaction-game-circuit-diagram](https://github.com/user-attachments/assets/964365fb-8676-49f3-9b7f-9e4a6dde0d3c)
+![Reaction-game-circuit-diagram](https://github.com/user-attachments/assets/db314eaa-afae-4679-94c3-0e0821d4c6ce)
 
 
 ## List of components used
