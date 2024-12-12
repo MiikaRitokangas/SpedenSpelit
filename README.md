@@ -27,7 +27,7 @@ During the development of the project, there have been added additional features
 
 #### Circuit diagram
 
-![Reaction-game-circuit-diagram](https://github.com/user-attachments/assets/db314eaa-afae-4679-94c3-0e0821d4c6ce)
+![Reaction game - circuit diagram](https://github.com/user-attachments/assets/ad08d11e-d29b-49f8-aed9-9d3aa474bc6a)
 
 
 ## List of components used
@@ -41,11 +41,12 @@ During the development of the project, there have been added additional features
 |Yellow LED, Through Hole, 5mm        | 1           | Generic               |
 |Green LED, Through Hole, 5mm         | 1           | Generic               |
 |SMD Piezo Buzzer                     | 1           | KLJ-1625              |
-|Push Button 4-pin                    | 4           | Generic               |
-|680 Ω resistor (red LED)             | 1           | Generic               |
-|180 Ω resistor (yello and green LED) | 2           | Generic               |
-|2k Ω resistor (turquoise LED)        | 1           | Generic               |
 |Button switch                        | 5           | Kailh Choc v1 red     |
+|180 Ω resistor (yello and green LED) | 2           | Generic               |
+|680 Ω resistor (Turquoise LED)       | 1           | Generic               |
+|690 Ω resistor (7-segment display)   | 21          | Generic               |
+|2k Ω resistor (red LED)              | 1           | Generic               |
+
 
 ## Simulation
 
