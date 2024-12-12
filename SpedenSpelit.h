@@ -12,7 +12,20 @@
 
 
 extern volatile int buttonNumber;
-
+struct gameStruct {
+  volatile int state;              // enum gameStates
+  volatile int mode;               // enum GameModes
+  volatile int index;              // current game step
+  volatile int values[100];        // game values
+  volatile int score;              // user score
+  volatile int highScore1;         // high score fetched from EEPROM
+  volatile int highScore2;         // high score fetched from EEPROM
+  volatile int timer;              // used as an ingame timer
+  volatile bool waitForUserInput;  // bool whether the game is waiting for userinput or not
+  float frequency;                 // gamespeed modifier
+  volatile bool cheat;             // is cheatmode enabled
+};
+extern gameStruct game;
 
 enum GameStates {
   MAINMENU,
@@ -55,7 +68,7 @@ void initializeGame(void);
   byte lastButtonPress of the player 0 or 1 or 2 or 3
   
 */
-void checkGame(byte);
+void checkGame(int);
 
 
 /*

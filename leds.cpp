@@ -1,10 +1,10 @@
-#include <Arduino.h>
 #include "leds.h"
 
-byte startGameLeds[] { 0, 1, 1, 2, 1, 50, 3, 0 }; // LEDs for start game sound 50 = break
-byte startGameAltLeds[] { 1, 0, 2, 4, 3, 7}; // LEDs for start game alternative sound
+byte gameStartLeds[] { 0, 1, 1, 2, 1, 50, 3, 0 }; // LEDs for start game sound 50 = break
+byte gameStartAltLeds[] { 1, 0, 2, 4, 3, 7}; // LEDs for start game alternative sound
 byte gameOverLeds[] {14, 14, 14}; //  LEDs for game over sound
 byte highScoreLeds[] {12, 10, 7, 5, 6, 5, 4, 3, 1, 2, 0, 50}; //  LEDs for high score sound
+byte speedUpLeds[] {40, 40, 40};
 
 //Intializes analog pins A2,A3,A4,A5 to be used as outputs.
 void initializeLeds()
@@ -16,6 +16,7 @@ void initializeLeds()
   pinMode(LED_3, OUTPUT); // Pin A5
 }
 
+// need a solution for blinking leds without using delay, for example, setting a flag for a led to be blinked once and handling it in the main loop() with millis
 // Flash a single LED
 void flashLed(int ledNumber) {
   setLed(ledNumber); // LED on
@@ -100,9 +101,11 @@ void handleLeds(byte note, int ledDelay) {
         break;
       }
     default:
-      setLed(note);   // Turn on a single LED
-      delay(ledDelay);// Delay
-      setLed(note);   // Turn off
+      if (note != 40) {
+        setLed(note);   // Turn on a single LED
+        delay(ledDelay);// Delay
+        setLed(note);   // Turn off
+      }
       break;
   }
 }

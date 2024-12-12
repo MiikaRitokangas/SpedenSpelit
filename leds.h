@@ -8,10 +8,11 @@
 #define LED_2 A4
 #define LED_3 A5
 
-extern byte startGameLeds[];  // LEDs for the "start game sound"
-extern byte startGameAltLeds[];  // LEDs for the "alternative start game sound"
+extern byte gameStartLeds[];  // LEDs for the "start game sound"
+extern byte gameStartAltLeds[];  // LEDs for the "alternative start game sound"
 extern byte gameOverLeds[];  // LEDs for the "game over sound"
 extern byte highScoreLeds[];  // LEDs for the "high score sound"
+extern byte speedUpLeds[];
 
 /*
   initializeLeds() subroutine intializes analog pins A2,A3,A4,A5
@@ -25,7 +26,7 @@ void flashLed(int);
 // Function to flash a single LED for menu operations
 void flashLedMenu(int);
 
-static int ledDuration = 1000;
+static int ledDuration = 500;
 static int ledOffDuration = 200;
 
 // Function to toggle multiple LEDs on and off
