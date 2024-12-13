@@ -25,10 +25,13 @@ During the development of the project, there have been added additional features
 
 ## Technical Specifications
 
-#### Circuit diagram
+**Circuit diagram**
 
 ![Reaction-game-circuit-diagram](https://github.com/user-attachments/assets/7d4f1c9f-e668-4620-bf99-8430fd5c6d62)
 
+**Flowchart**
+
+![SpedenSpelit_Flowchart_5](https://github.com/user-attachments/assets/a69bbc57-30aa-4bd9-8e72-cf8900c66340)
 
 ## List of components used
 
