@@ -31,12 +31,12 @@ void initializeDisplay(void) {
 
 void writeByte(uint8_t bits, bool last) {
   /*
-    WriteByte subroutine writes number 0,1,...,9 to 7-segment display.
+    WriteByte subroutine writes number 0-9 to 7-segment display.
     Last parameter controls when number is actually shown.
   */
 
   uint8_t dispBits = 0;
-  // Switch casella sopivat bitit muuttujaan
+  // Case structure sets correct bits into 8-bit variable
   switch(bits) {
     case 0:
       dispBits = 0b00111111;
@@ -73,14 +73,14 @@ void writeByte(uint8_t bits, bool last) {
       break;
   }
 
-  // Bittien shiftaus rekisteriin vaikka for-loopilla
+  // Shifting bits to register in for-loop
   for(int i=0; i<8; i++) {
     digitalWrite(DISP_DATAIN, ((dispBits >> 7-i) & 0b00000001));
     digitalWrite(DISP_SHIFT, 1);
     digitalWrite(DISP_SHIFT, 0);
   }
 
-  // Jos last on tosi, niin kopioidaan shift rekisteri storageen
+  // If last is true, copy shift register to latches
   if(last == true) {
     digitalWrite(DISP_LATCH, 1);
     digitalWrite(DISP_LATCH, 0);
@@ -90,7 +90,7 @@ void writeByte(uint8_t bits, bool last) {
 
 void writeHighAndLowNumber(uint8_t tens, uint8_t ones) {
   /*
-    writeHighAndLowNumber writes number from range 0..99 to
+    writeHighAndLowNumber writes number from range 0-99 to
     two cascaded 7-segment displays.
   */
   writeByte(tens, false);
@@ -105,5 +105,12 @@ void showResult(byte number) {
     This function is should be fused with writeHighAndLowNumber, these
     two functions have very little functionality, and are related.
   */
+
+  // Add support for 3rd digit (hundreds)
+  if(NUMBER_OF_DISPLAYS == 3) {
+    writeByte(number / 100);
+    number = number % 100;
+  }
+
   writeHighAndLowNumber(number / 10, number % 10);
 }
