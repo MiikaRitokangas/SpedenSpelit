@@ -207,9 +207,9 @@ void game1Logic() {
       } else {
         game.timer++;
       }
-      // if (game.index > game.score + 5) {
-      //   stopGame();
-      // }
+      if (game.index > game.score + 5) {
+        stopGame();
+      }
       newtimerInterrupt = false;
     }
   }
