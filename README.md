@@ -54,7 +54,7 @@ During the development of the project, there have been added additional features
 
 ## Case
 
-You can find the case .stl and .f3d files in the [/case-files](./case-file) folder
+You can find the case .stl and .f3d files in the [/case-files](./case-files) folder
 ![Picture-of-the-case](./pictures/case.png)
 
 
