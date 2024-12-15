@@ -16,7 +16,7 @@ struct gameStruct {
   volatile int state;              // enum gameStates
   volatile int mode;               // enum GameModes
   volatile int index;              // current game step
-  volatile int values[100];        // game values
+  volatile int values[250];        // game values
   volatile int score;              // user score
   volatile int highScore1;         // high score fetched from EEPROM
   volatile int highScore2;         // high score fetched from EEPROM

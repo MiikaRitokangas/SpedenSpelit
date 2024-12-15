@@ -108,7 +108,7 @@ void showResult(byte number) {
 
   // Add support for 3rd digit (hundreds)
   if(NUMBER_OF_DISPLAYS == 3) {
-    writeByte(number / 100);
+    writeByte(number / 100, false);
     number = number % 100;
   }
 
