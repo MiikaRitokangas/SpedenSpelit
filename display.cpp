@@ -106,9 +106,9 @@ void showResult(byte number) {
   */
 
   // Add support for any number of digits
-  for(i=NUMBER_OF_DISPLAYS; i>0; i--) {
+  for(uint8_t i=NUMBER_OF_DISPLAYS; i>0; i--) {
     uint8_t digit = number;
-    for(j=0; j<i; j++) {
+    for(uint8_t j=0; j<i; j++) {
       digit = digit / 10;
     }
 
