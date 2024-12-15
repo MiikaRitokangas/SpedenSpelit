@@ -9,6 +9,7 @@
 - [Additional features](#additional-features)
 - [Technical Specifications](#technical-specifications)
 - [List of components used](#list-of-components-used)
+- [Case](#case)
 - [Simulation](#simulation)
 
 ## Project's goals
@@ -27,11 +28,11 @@ During the development of the project, there have been added additional features
 
 **Circuit diagram**
 
-![Reaction-game-circuit-diagram](https://github.com/user-attachments/assets/7d4f1c9f-e668-4620-bf99-8430fd5c6d62)
+![Reaction-game-circuit-diagram](.pictures/circuit-diagram.png)
 
 **Flowchart**
 
-![SpedenSpelit_Flowchart_5](https://github.com/user-attachments/assets/a69bbc57-30aa-4bd9-8e72-cf8900c66340)
+![SpedenSpelit_Flowchart_5](./pictures/flowchart.png)
 
 ## List of components used
 
@@ -47,8 +48,14 @@ During the development of the project, there have been added additional features
 |Button switch                        | 5           | Kailh Choc v1 red     |
 |180 Ω resistor (yello and green LED) | 2           | Generic               |
 |680 Ω resistor (Turquoise LED)       | 1           | Generic               |
-|690 Ω resistor (7-segment display)   | 21          | Generic               |
+|390 Ω resistor (7-segment display)   | 21          | Generic               |
 |2k Ω resistor (red LED)              | 1           | Generic               |
+
+
+## Case
+
+You can find the case .stl and .f3d files in the [/case-files](./case-file) folder
+![Picture-of-the-case](./pictures/case.png)
 
 
 ## Simulation
