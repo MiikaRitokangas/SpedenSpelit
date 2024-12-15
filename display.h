@@ -8,7 +8,7 @@
 #define DISP_ENABLEn  9
 #define DISP_DATAIN   8
 
-#define NUMBER_OF_DISPLAYS 2
+#define NUMBER_OF_DISPLAYS 3
 
 /*
 Test code for display module:
