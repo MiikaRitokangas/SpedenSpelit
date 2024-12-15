@@ -28,7 +28,7 @@ During the development of the project, there have been added additional features
 
 **Circuit diagram**
 
-![Reaction-game-circuit-diagram](.pictures/circuit-diagram.png)
+![Reaction-game-circuit-diagram](./pictures/circuit-diagram.png)
 
 **Flowchart**
 
