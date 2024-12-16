@@ -64,7 +64,7 @@ void initializetimer(void) {
 
 void checkGame(int userInput) {
   // check if the last played button was correct
-  if (game.score < 100) {
+  if (game.score < 250) {
     switch (game.mode) {
       case MODE1:
         if (game.values[game.score] == userInput) {
@@ -166,7 +166,7 @@ void initializeGame() {
   game.timer = 0;
   Timer1.setPeriod(calculateFrequency());
   randomSeed(analogRead(A0));
-  for (int i = 0; i < 100; i++) {
+  for (int i = 0; i < 250; i++) {
     do {
       currentNum = int(random(0, 4));
     } while (currentNum == previousNum);
@@ -187,7 +187,7 @@ void startGame() {
 
 void game1Logic() {
   if (newtimerInterrupt) {
-    if (game.index < 100) {
+    if (game.index < 250) {
       if ((!game.cheat) || !(game.index % 20 >= 10 && game.index % 20 < 20)) {
         setLed(game.values[game.index]);
       }
@@ -199,17 +199,17 @@ void game1Logic() {
       game.index++;
       if (game.timer > 9) {
         game.timer = 1;
-        game.frequency -= 0.1;
+        if (game.frequency != 0.1) {
+          game.frequency -= 0.1;
+        }
         playTune(SPEEDUP_TUNE);
-        Serial.println(calculateFrequency());
-        Serial.println(game.frequency);
         Timer1.setPeriod(calculateFrequency());
       } else {
         game.timer++;
       }
-      // if (game.index > game.score + 5) {
-      //   stopGame();
-      // }
+      if (game.index > game.score + 5) {
+        stopGame();
+      }
       newtimerInterrupt = false;
     }
   }
@@ -224,8 +224,9 @@ void game2Logic() {
       clearAllLeds();
     }
     game.waitForUserInput = true;
-    if (game.score % 10 == 0 && game.score != 0) {
+    if (game.score % 10 == 0 && game.score != 0 && game.frequency != 0.1) {
       game.frequency -= 0.1;
+      Timer1.setPeriod(calculateFrequency());
       playTune(SPEEDUP_TUNE);
     }
   }
