@@ -99,18 +99,28 @@ void writeHighAndLowNumber(uint8_t tens, uint8_t ones) {
 
 void showResult(byte number) {
   /*
-    showResuts(byte result) This function separates tens and ones
-    from a result number and calls writeHighAndLowNumber subroutine
-    to actually write the number to 7-segment display.
-    This function is should be fused with writeHighAndLowNumber, these
-    two functions have very little functionality, and are related.
+    showResuts(byte result) This function separates digits from result number
+    and calls writeByte subroutine to write the digit to 7-segment display.
+    New implementation of this function makes writeHighAndLowNumber subroutine
+    redundant, but it is required in project documents.
   */
 
-  // Add support for 3rd digit (hundreds)
-  if(NUMBER_OF_DISPLAYS == 3) {
-    writeByte(number / 100, false);
-    number = number % 100;
+  // Add support for any number of digits
+  for(uint8_t i=NUMBER_OF_DISPLAYS; i>0; i--) {
+    uint8_t digit = number;
+    for(uint8_t j=0; j<i; j++) {
+      digit = digit / 10;
+    }
+
+    digit = digit % 10;
+    
+    if(i==1) {
+      writeByte(digit, true);
+    } else {
+      writeByte(digit, false);
+    }
   }
 
-  writeHighAndLowNumber(number / 10, number % 10);
+  // old implementation, works only for 2 digits
+  //writeHighAndLowNumber(number / 10, number % 10);
 }
